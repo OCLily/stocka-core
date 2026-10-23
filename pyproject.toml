@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stocka-core"
+version = "0.1.0"
+description = "Data-quality scores and risk measures for equity research. A research tool, not investment advice."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = [
+    # brain/tests/test_numeric_regression.py pins values measured with numpy 2.5.x;
+    # a numpy feature release may shift them, so re-pin before widening this range.
+    "numpy>=2.5,<2.6",
+    "arch>=8,<9",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Intended Audience :: Science/Research",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+stocka = "stocka.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["brain*", "stocka*"]
+exclude = ["brain.tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["brain/tests", "tests"]
+pythonpath = ["."]

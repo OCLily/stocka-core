@@ -1,0 +1,19 @@
+# Example configuration for `stocka demo --config config/example.toml`.
+# The values below equal the built-in defaults. They are illustrative
+# settings for a demo, not recommendations and not calibrated thresholds.
+# The engine's own rules (vetos in brain/scoring/dq_score.py, position
+# limits, stops, drawdown tiers) are fixed in code and not configurable.
+
+[demo]
+seed = 1
+tickers = 20            # synthetic tickers SYN01..SYNnn, 1 to 99; ignored with --data-dir
+bootstrap_sims = 2000   # bootstrap drawdown paths: 0 = off, otherwise 100 to 20000
+
+[screen]
+min_dq_score = 70             # composite DQ score from 0 to 100
+max_beneish_m = -2.22         # stricter than the engine veto above -1.78: excludes the gray zone too
+exclude_sloan_q5 = true       # also drop Q5 tickers the engine only flags (ratio <= 0.05)
+require_verified_audit = true # drop tickers whose audit inputs are flagged "*_unverified"
+
+# The basket expected shortfall is always reported at the engine's fixed
+# 97.5 % level and is not configurable.
